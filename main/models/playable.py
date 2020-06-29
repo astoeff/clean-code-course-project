@@ -1,4 +1,4 @@
-from constants import (PLAYER_MAX_MANA_AND_HEALTH_VALUE, PLAYER_MIN_MANA_AND_HEALTH_VALUE,)
+from main.constants import (PLAYER_MAX_MANA_AND_HEALTH_VALUE, PLAYER_MIN_MANA_AND_HEALTH_VALUE,)
 
 
 def regulate_player_attribute(attribute):
