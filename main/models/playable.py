@@ -1,4 +1,8 @@
-from main.constants import (PLAYER_MAX_MANA_AND_HEALTH_VALUE, PLAYER_MIN_MANA_AND_HEALTH_VALUE,)
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from constants import PLAYER_MIN_MANA_AND_HEALTH_VALUE, PLAYER_MAX_MANA_AND_HEALTH_VALUE
 
 
 def regulate_player_attribute(attribute):
