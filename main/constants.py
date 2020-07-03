@@ -22,6 +22,7 @@ INTRO_TEXT = 'Hi, a game has just started!\n\n'\
 CLEAR_BASH_COMMAND = 'clear'
 C_KEY = 'c'
 MESSAGE_FOR_CONTINUE = 'Press c for continue ...'
+
 CREATE_HERO_TEXT = 'Now enter name and title for your hero\n'\
                    'Example: Bron, Dragonslayer\n'
 
