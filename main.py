@@ -1,9 +1,10 @@
 from main.constants import (INTRO_TEXT, CREATE_HERO_TEXT, HERO_HEALTH_WHEN_INITIALISING,
                             HERO_MANA_WHEN_INITIALISING, HERO_MANA_REGENERATION_RATE_WHEN_INITIALISING,
-                            DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_DAMAGE, HERO_INFORMATION_TEXT)
+                            DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_DAMAGE, HERO_INFORMATION_TEXT, STOP_RESULT)
 from main.utils import new_screen, wait_for_continue_command
 from main.models.hero import Hero
 from main.treasures.weapon import Weapon
+from main.dungeon import Dungeon
 
 
 def print_intro():
@@ -46,10 +47,34 @@ def create_hero():
     return hero
 
 
+def show_move_screen(hero, dungeon):
+    pass
+
+
+def show_game_over_screen():
+    pass
+
+
+def play_game(hero, dungeon):
+    dungeon.spawn(hero)
+    is_game_in_process = True
+    while is_game_in_process:
+        result = show_move_screen(hero, dungeon)
+        if not dungeon.hero.is_alive():
+            show_game_over_screen()
+            is_game_in_process = False
+        else:
+            if result == STOP_RESULT:
+                show_game_over_screen()
+                is_game_in_process = False
+
+
 def main():
     execute_intro()
     hero = create_hero()
     print_hero_initial_information(hero)
+    dungeon = Dungeon()
+    play_game(hero, dungeon)
 
 
 if __name__ == '__main__':
