@@ -46,6 +46,7 @@ PLAYER_AVAILABLE_COMMANDS_LIST_OF_SYMBOLS = ['w', 's', 'a', 'd', 'x']
 ATTACK_KEY = 'x'
 MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}
 GATE_FIELD = 'G'
+
 CONGRATULATIONS_TEXT = 'Congratulations, you have won!\n' + 100 * '*'
 ACHIEVED_TREASURE_TEXT = 'You just received:\n'
 
