@@ -27,7 +27,7 @@ class Dungeon:
     def print_map(self):
         print(self.map)
 
-    def spawn(self, hero):
+    def spawn(self):
         if DUNGEON_MAP_HERO_POSITION_SYMBOL in self.map:
             return False
         if DUNGEON_MAP_STARTING_POSITION_SYMBOL in self.map:
