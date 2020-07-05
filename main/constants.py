@@ -22,6 +22,7 @@ INTRO_TEXT = 'Hi, a game has just started!\n\n'\
 CLEAR_BASH_COMMAND = 'clear'
 C_KEY = 'c'
 MESSAGE_FOR_CONTINUE = 'Press c for continue ...'
+
 CREATE_HERO_TEXT = 'Now enter name and title for your hero\n'\
                    'Example: Bron, Dragonslayer\n'
 
@@ -33,18 +34,20 @@ DEFAULT_WEAPON_NAME = 'knife'
 DEFAULT_WEAPON_DAMAGE = 10
 HERO_INFORMATION_TEXT = 'Information for hero:\n'
 
-LEGEND = '\nLEGEND:'\
-         'S - spawning position           ' + 'C - checkpoint'\
-         'G - exit of the dungeon         ' + 'T - treasure'\
+LEGEND = '\nLEGEND:\n'\
+         'S - spawning position           ' + 'C - checkpoint\n'\
+         'G - exit of the dungeon         ' + 'T - treasure\n'\
          '# - obstacle                    ' + 'E - enemy\n'
 
 STOP_RESULT = 'stop'
-PLAYER_AVAILABLE_COMMANDS_TEXT = 'Press w,s,a, d to move or x to attack from distance by spell ...\n'
-PLAYER_AVAILABLE_COMMANDS_LIST_OF_SYMBOLS = ['w', 's', 'a', 'd', 'x']
+PLAYER_AVAILABLE_COMMANDS_TEXT = 'Press w, s, a, d to move or x to attack from distance by spell ...\n      q for quit'
+PLAYER_AVAILABLE_COMMANDS_LIST_OF_KEYS = ['w', 's', 'a', 'd', 'x', 'q']
 
 ATTACK_KEY = 'x'
+QUIT_KEY = 'q'
 MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY = {'w': 'up', 's': 'down', 'a': 'left', 'd': 'right'}
 GATE_FIELD = 'G'
+
 CONGRATULATIONS_TEXT = 'Congratulations, you have won!\n' + 100 * '*'
 ACHIEVED_TREASURE_TEXT = 'You just received:\n'
 
@@ -53,3 +56,5 @@ ERROR_MESSAGE_IF_NO_STARTING_POSITION_IN_DUNGEON_MAP = 'No starting point'
 DUNGEON_MAP_GATE_POSITION_SYMBOL = 'G'
 ERROR_MESSAGE_IF_INVALID_NUMBER_OF_GATES_IN_DUNGEON_MAP = 'Number of gates != 1'
 DUNGEON_MAP_HERO_POSITION_SYMBOL = 'H'
+STOP_RESULT = 'stop'
+LEVEL_1_MAP_FILE = 'main/maps/level1.txt'

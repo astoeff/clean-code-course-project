@@ -4,8 +4,11 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from constants import (PLAYER_MIN_MANA_AND_HEALTH_VALUE, PLAYER_MAX_MANA_AND_HEALTH_VALUE,
                        INVALID_WEAPON_VALUE_ERROR_TEXT, INVALID_SPELL_VALUE_ERROR_TEXT)
-from treasures.weapon import Weapon
-from treasures.spell import Spell
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
+from main.treasures.weapon import Weapon
+from main.treasures.spell import Spell
 
 
 def regulate_player_attribute(attribute):

@@ -21,20 +21,21 @@ def check_if_correct_key_is_pressed(symbols, pressed):
     return is_correct_key_pressed
 
 
-def wait_until_symbol_from_list_of_symbols_is_read_from_console(symbols, message):
+def wait_until_key_from_list_of_keys_is_pressed(symbols, message):
     print(message)
-    pressed = None
+    pressed_key = None
     is_correct_key_pressed = False
     while not is_correct_key_pressed:
-        pressed = str(get_character())[2]
-        pressed = pressed.lower()
-        is_correct_key_pressed = check_if_correct_key_is_pressed(symbols, pressed)
+        pressed_key = str(get_character())[2]
+        pressed_key = pressed_key.lower()
+        is_correct_key_pressed = check_if_correct_key_is_pressed(symbols, pressed_key)
+    return pressed_key
 
 
 def wait_for_continue_command():
-    symbol = C_KEY
+    keys = [C_KEY]
     message = MESSAGE_FOR_CONTINUE
-    wait_until_symbol_from_list_of_symbols_is_read_from_console([symbol], message)
+    wait_until_key_from_list_of_keys_is_pressed(keys, message)
 
 
 def show_message_screen(message):

@@ -32,4 +32,4 @@ class Hero(Playable):
             print('Weapon: ', str(self.weapon)[8:])
         else:
             print('Weapon: ', self.weapon)
-        print('Spell: ', self.spell + '\n')
+        print('Spell: ', self.spell, '\n')
