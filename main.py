@@ -65,15 +65,16 @@ def get_pressed_key_for_turn():
 
 
 def select_screen_depending_on_result_from_movement(result_from_movement):
-    is_treasure_achieved_after_movement = isinstance(result_from_movement, Treasure)
-    is_hero_in_enemy_field_after_movement = True
-    if result_from_movement == GATE_FIELD:
-        show_message_screen(CONGRATULATIONS_TEXT)
-        raise SystemExit()
-    elif is_treasure_achieved_after_movement:
-        show_message_screen(ACHIEVED_TREASURE_TEXT + str(result_from_movement))
-    elif is_hero_in_enemy_field_after_movement:
-        show_automatic_attack_screen(result_from_movement)
+    # is_treasure_achieved_after_movement = isinstance(result_from_movement, Treasure)
+    # is_hero_in_enemy_field_after_movement = True
+    # if result_from_movement == GATE_FIELD:
+    #     show_message_screen(CONGRATULATIONS_TEXT)
+    #     raise SystemExit()
+    # elif is_treasure_achieved_after_movement:
+    #     show_message_screen(ACHIEVED_TREASURE_TEXT + str(result_from_movement))
+    # elif is_hero_in_enemy_field_after_movement:
+    #     show_automatic_attack_screen(result_from_movement)
+    pass
 
 
 def move_hero(dungeon, pressed_key_for_turn):
@@ -98,7 +99,6 @@ def game_turn(dungeon):
     print_map_with_legend(dungeon)
     pressed_key_for_turn = get_pressed_key_for_turn()
     select_player_turn_depending_on_pressed_key_for_turn(dungeon, pressed_key_for_turn)
-    # select_screen_depending_on_pressed_key(dungeon, pressed_key_for_turn)
 
 
 def show_game_over_screen():
