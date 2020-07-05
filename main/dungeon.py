@@ -3,6 +3,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 
 from utils import validate_dungeon_map
+from constants import DUNGEON_MAP_STARTING_POSITION_SYMBOL, DUNGEON_MAP_HERO_POSITION_SYMBOL
 
 
 class Dungeon:
@@ -22,3 +23,13 @@ class Dungeon:
     def map_file_to_string(self, file):
         with open(file, 'r') as f:
             return f.read()
+
+    def print_map(self):
+        print(self.map)
+
+    def spawn(self, hero):
+        if DUNGEON_MAP_HERO_POSITION_SYMBOL in self.map:
+            return False
+        if DUNGEON_MAP_STARTING_POSITION_SYMBOL in self.map:
+            self. map = self.map.replace(DUNGEON_MAP_STARTING_POSITION_SYMBOL, DUNGEON_MAP_HERO_POSITION_SYMBOL, 1)
+            return True
