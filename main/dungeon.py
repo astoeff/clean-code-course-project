@@ -8,9 +8,11 @@ from constants import (DUNGEON_MAP_STARTING_POSITION_SYMBOL, DUNGEON_MAP_HERO_PO
                        UP_DIRECTION_STRING, DOWN_DIRECTION_STRING, LEFT_DIRECTION_STRING, RIGHT_DIRECTION_STRING,
                        DUNGEON_MAP_EMPTY_FIELD_POSITION_SYMBOL, DUNGEON_MAP_TREASURE_POSITION_SYMBOL,
                        DUNGEON_MAP_ENEMY_POSITION_SYMBOL, DUNGEON_MAP_CHECKPOINT_POSITION_SYMBOL,
-                       DUNGEON_MAP_GATE_POSITION_SYMBOL)
+                       DUNGEON_MAP_GATE_POSITION_SYMBOL, ACHIEVED_TREASURE_RESULT_FROM_MOVEMENT)
 
-import time
+import random
+
+
 class Dungeon:
     def __init__(self, file):
         self.map = self.map_file_to_string(file)
@@ -103,6 +105,7 @@ class Dungeon:
         hero_new_column, hero_new_row = self.calculate_new_hero_position(movement_direction, hero_current_column,
                                                                          hero_current_row)
 
+        result_from_movement = None
         if check_is_row_or_column_inside_map(hero_new_row, hero_new_column):
             try:
                 if self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_EMPTY_FIELD_POSITION_SYMBOL:
@@ -112,6 +115,7 @@ class Dungeon:
                 elif self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_TREASURE_POSITION_SYMBOL:
                     self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
                                                              hero_new_column, hero_new_row)
+                    result_from_movement = ACHIEVED_TREASURE_RESULT_FROM_MOVEMENT
                 elif self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_ENEMY_POSITION_SYMBOL:
                     self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
                                                              hero_new_column, hero_new_row)
@@ -123,3 +127,4 @@ class Dungeon:
                                                              hero_new_column, hero_new_row)
             except IndexError:
                 pass
+        return result_from_movement
