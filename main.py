@@ -2,8 +2,8 @@ from main.constants import (INTRO_TEXT, CREATE_HERO_TEXT, HERO_HEALTH_WHEN_INITI
                             HERO_MANA_WHEN_INITIALISING, HERO_MANA_REGENERATION_RATE_WHEN_INITIALISING,
                             DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_DAMAGE, HERO_INFORMATION_TEXT, STOP_RESULT,
                             PLAYER_AVAILABLE_COMMANDS_TEXT, PLAYER_AVAILABLE_COMMANDS_LIST_OF_KEYS, LEGEND,
-                            ATTACK_KEY, MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY, GATE_FIELD, CONGRATULATIONS_TEXT,
-                            ACHIEVED_TREASURE_TEXT, LEVEL_1_MAP_FILE, QUIT_KEY)
+                            ATTACK_KEY, MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY, DUNGEON_MAP_GATE_POSITION_SYMBOL,
+                            CONGRATULATIONS_TEXT, ACHIEVED_TREASURE_TEXT, LEVEL_1_MAP_FILE, QUIT_KEY)
 from main.utils import (new_screen, wait_for_continue_command,
                         wait_until_key_from_list_of_keys_is_pressed, show_message_screen)
 from main.models.hero import Hero

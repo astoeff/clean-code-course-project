@@ -3,12 +3,14 @@ from copy import deepcopy
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 
-from utils import validate_dungeon_map
+from utils import validate_dungeon_map, check_is_row_or_column_inside_map
 from constants import (DUNGEON_MAP_STARTING_POSITION_SYMBOL, DUNGEON_MAP_HERO_POSITION_SYMBOL, DUNGEON_MAP_ROW_SEPARATOR,
                        UP_DIRECTION_STRING, DOWN_DIRECTION_STRING, LEFT_DIRECTION_STRING, RIGHT_DIRECTION_STRING,
-                       DUNGEON_MAP_EMPTY_FIELD_POSITION_SYMBOL)
+                       DUNGEON_MAP_EMPTY_FIELD_POSITION_SYMBOL, DUNGEON_MAP_TREASURE_POSITION_SYMBOL,
+                       DUNGEON_MAP_ENEMY_POSITION_SYMBOL, DUNGEON_MAP_CHECKPOINT_POSITION_SYMBOL,
+                       DUNGEON_MAP_GATE_POSITION_SYMBOL)
 
-
+import time
 class Dungeon:
     def __init__(self, file):
         self.map = self.map_file_to_string(file)
@@ -40,10 +42,8 @@ class Dungeon:
 
     @map_as_list.setter
     def map_as_list(self, m):
-        print(m)
         self.map = self.convert_map_as_list_to_string(m)
         self._map_as_list = deepcopy(m)
-        print(self._map_as_list)
 
     def map_file_to_string(self, file):
         with open(file, 'r') as f:
@@ -103,10 +103,23 @@ class Dungeon:
         hero_new_column, hero_new_row = self.calculate_new_hero_position(movement_direction, hero_current_column,
                                                                          hero_current_row)
 
-        try:
-            if self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_EMPTY_FIELD_POSITION_SYMBOL:
-                self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
-                                                         hero_new_column, hero_new_row)
-                self.hero.take_mana(self.hero.mana_regeneration_rate)
-        except IndexError:
-            pass
+        if check_is_row_or_column_inside_map(hero_new_row, hero_new_column):
+            try:
+                if self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_EMPTY_FIELD_POSITION_SYMBOL:
+                    self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
+                                                             hero_new_column, hero_new_row)
+                    self.hero.take_mana(self.hero.mana_regeneration_rate)
+                elif self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_TREASURE_POSITION_SYMBOL:
+                    self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
+                                                             hero_new_column, hero_new_row)
+                elif self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_ENEMY_POSITION_SYMBOL:
+                    self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
+                                                             hero_new_column, hero_new_row)
+                elif self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_CHECKPOINT_POSITION_SYMBOL:
+                    self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
+                                                             hero_new_column, hero_new_row)
+                elif self.map_as_list[hero_new_row][hero_new_column] == DUNGEON_MAP_GATE_POSITION_SYMBOL:
+                    self.update_hero_position_in_map_as_list(hero_current_column, hero_current_row,
+                                                             hero_new_column, hero_new_row)
+            except IndexError:
+                pass

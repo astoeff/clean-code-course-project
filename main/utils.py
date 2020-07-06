@@ -53,3 +53,7 @@ def validate_dungeon_map(dungeon_map):
         if symbol == "G":
             gates += 1
     assert gates == 1, "Number of gates != 1"
+
+
+def check_is_row_or_column_inside_map(row, column):
+    return row >= 0 and column >= 0
