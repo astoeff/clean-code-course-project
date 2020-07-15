@@ -19,6 +19,10 @@ class Enemy(Playable):
                                    ENEMY_MAX_MANA_AND_HEALTH_WHEN_INITIALISING)
         self.damage = random.randint(ENEMY_MIN_DAMAGE_WHEN_INITIALISING, ENEMY_MAX_DAMAGE_WHEN_INITIALISING)
 
+    def attack(self):
+        max_damage = max(self.damage, super().attack())
+        return max_damage
+
     def __repr__(self):
         return "Enemy(health={h},\
  mana={m}, damage={d})".format(h=self.health, m=self.mana, d=self.damage)
