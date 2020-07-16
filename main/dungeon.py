@@ -10,14 +10,15 @@ from constants import (DUNGEON_MAP_STARTING_POSITION_SYMBOL, DUNGEON_MAP_HERO_PO
                        DUNGEON_MAP_TREASURE_POSITION_SYMBOL, DUNGEON_MAP_ENEMY_POSITION_SYMBOL,
                        DUNGEON_MAP_CHECKPOINT_POSITION_SYMBOL, DUNGEON_MAP_GATE_POSITION_SYMBOL,
                        ACHIEVED_TREASURE_RESULT_FROM_MOVEMENT, REACHED_ENEMY_RESULT_FROM_MOVEMENT,
-                       REACHED_CHECKPOINT_RESULT_FROM_MOVEMENT, REACHED_GATE_RESULT_FROM_MOVEMENT)
+                       REACHED_CHECKPOINT_RESULT_FROM_MOVEMENT, REACHED_GATE_RESULT_FROM_MOVEMENT,
+                       DUNGEON_INITIAL_CHECKPOINTS_COUNT, FILE_OPEN_IN_READING_MODE)
 
 
 class Dungeon:
     def __init__(self, file):
         self.map = self.map_file_to_string(file)
         self.hero = None
-        self.checkpoints = 0
+        self.checkpoints = DUNGEON_INITIAL_CHECKPOINTS_COUNT
 
     @property
     def map(self):
@@ -48,7 +49,7 @@ class Dungeon:
         self._map_as_list = deepcopy(m)
 
     def map_file_to_string(self, file):
-        with open(file, 'r') as f:
+        with open(file, FILE_OPEN_IN_READING_MODE) as f:
             return f.read()
 
     def print_map(self):

@@ -2,13 +2,9 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from constants import (PLAYER_MIN_MANA_AND_HEALTH_VALUE, PLAYER_MAX_MANA_AND_HEALTH_VALUE,
-                       INVALID_WEAPON_VALUE_ERROR_TEXT, INVALID_SPELL_VALUE_ERROR_TEXT)
+from constants import PLAYER_MIN_MANA_AND_HEALTH_VALUE, PLAYER_MAX_MANA_AND_HEALTH_VALUE
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-
-from main.treasures.weapon import Weapon
-from main.treasures.spell import Spell
 
 
 def regulate_player_attribute(attribute):
@@ -28,7 +24,7 @@ class Playable:
         return self.mana
 
     def is_alive(self):
-        return self.health > 0
+        return self.health > PLAYER_MIN_MANA_AND_HEALTH_VALUE
 
     def take_healing(self, healing_points):
         if self.is_alive():
@@ -46,13 +42,9 @@ class Playable:
         self.mana = regulate_player_attribute(attribute=self.mana)
 
     def equip(self, weapon):
-        if type(weapon) != Weapon:
-            raise ValueError(INVALID_WEAPON_VALUE_ERROR_TEXT)
         self.weapon = weapon
 
     def learn(self, spell):
-        if type(spell) != Spell:
-            raise ValueError(INVALID_SPELL_VALUE_ERROR_TEXT)
         self.spell = spell
 
     def can_attack_with_weapon(self):
@@ -62,8 +54,9 @@ class Playable:
         does_playable_have_mana_for_casting_spell = False
         does_playable_have_spell = self.spell is not None
         if does_playable_have_spell:
-            does_playable_have_mana_for_casting_spell = self.spell.mana_cost <= self.mana_cost
-        return does_playable_have_spell and does_playable_have_mana_for_casting_spell
+            does_playable_have_mana_for_casting_spell = self.spell.mana_cost <= self.mana
+        casting_spell_condition = does_playable_have_spell and does_playable_have_mana_for_casting_spell
+        return casting_spell_condition
 
     def attack(self):
         weapon_damage = 0
@@ -71,6 +64,6 @@ class Playable:
         if self.can_attack_with_weapon():
             weapon_damage = self.weapon.damage
         if self.can_cast_spell():
-            spell_damage = self.spell.damage_points
+            spell_damage = self.spell.damage
         max_damage = max(weapon_damage, spell_damage)
         return max_damage
