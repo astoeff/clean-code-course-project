@@ -1,19 +1,19 @@
 from main.constants import (INTRO_TEXT, CREATE_HERO_TEXT, HERO_HEALTH_WHEN_INITIALISING,
                             HERO_MANA_WHEN_INITIALISING, HERO_MANA_REGENERATION_RATE_WHEN_INITIALISING,
-                            DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_DAMAGE, HERO_INFORMATION_TEXT, STOP_RESULT,
+                            DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_DAMAGE, HERO_INFORMATION_TEXT,
                             PLAYER_AVAILABLE_COMMANDS_TEXT, PLAYER_AVAILABLE_COMMANDS_LIST_OF_KEYS, LEGEND,
-                            ATTACK_KEY, MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY, DUNGEON_MAP_GATE_POSITION_SYMBOL,
-                            CONGRATULATIONS_TEXT, ACHIEVED_TREASURE_TEXT, LEVEL_1_MAP_FILE, QUIT_KEY,
+                            ATTACK_KEY, MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY, LEVEL_1_MAP_FILE, QUIT_KEY,
                             ACHIEVED_TREASURE_RESULT_FROM_MOVEMENT, REACHED_ENEMY_RESULT_FROM_MOVEMENT,
                             REACHED_CHECKPOINT_RESULT_FROM_MOVEMENT, REACHED_GATE_RESULT_FROM_MOVEMENT,
-                            INPUT_NAME_TEXT, INPUT_TITLE_TEXT, GAME_OVER_TEXT)
-from main.utils import (new_screen, wait_for_continue_command, wait_until_key_from_list_of_keys_is_pressed,
-                        show_message_screen, generate_random_treasure_from_file)
+                            INPUT_NAME_TEXT, INPUT_TITLE_TEXT, GAME_OVER_TEXT,
+                            FIGHT_INFORMATION_PARTS_SEPARATOR_WHEN_PRINTING)
+from main.utils import (new_screen, wait_for_continue_command,
+                        wait_until_key_from_list_of_keys_is_pressed, generate_random_treasure_from_file)
 from main.models.hero import Hero
+from main.models.enemy import Enemy
 from main.treasures.weapon import Weapon
-from main.treasures.treasure import Treasure
 from main.dungeon import Dungeon
-import time
+from main.fight import Fight
 
 
 def print_intro():
@@ -74,26 +74,44 @@ def show_achieved_treasure(treasure):
     wait_for_continue_command()
 
 
-def select_screen_depending_on_result_from_movement(result_from_movement):
+def set_treasure_for_hero_in_dungeon(dungeon):
+    treasure = generate_random_treasure_from_file()
+    show_achieved_treasure(treasure)
+    treasure.set_for_player(dungeon.hero)
+
+
+def show_fight_information(fight):
+    new_screen()
+    print(FIGHT_INFORMATION_PARTS_SEPARATOR_WHEN_PRINTING.join(fight.get_fight_information()))
+    wait_for_continue_command()
+
+
+def start_fight_between_hero_and_enemy_in_dungeon(dungeon):
+    fight = Fight(dungeon.hero, Enemy())
+    fight.execute()
+    show_fight_information()
+
+
+def select_screen_depending_on_result_from_movement(dungeon, result_from_movement):
     is_treasure_achieved_after_movement = result_from_movement == ACHIEVED_TREASURE_RESULT_FROM_MOVEMENT
     is_gate_reached_after_movement = result_from_movement == REACHED_GATE_RESULT_FROM_MOVEMENT
     is_enemy_reached_after_movement = result_from_movement == REACHED_ENEMY_RESULT_FROM_MOVEMENT
     is_checkpoint_reached_after_movement = result_from_movement == REACHED_CHECKPOINT_RESULT_FROM_MOVEMENT
     if is_treasure_achieved_after_movement:
-        treasure = generate_random_treasure_from_file()
-        show_achieved_treasure(treasure)
+        set_treasure_for_hero_in_dungeon(dungeon)
     elif is_gate_reached_after_movement:
         raise SystemExit()
     elif is_enemy_reached_after_movement:
-        pass
+        start_fight_between_hero_and_enemy_in_dungeon(dungeon)
     elif is_checkpoint_reached_after_movement:
+        #TODO: create functionallity for achieving a checkpoint
         pass
 
 
 def move_hero(dungeon, pressed_key_for_turn):
     movement_direction = MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY[pressed_key_for_turn]
     result_from_movement = dungeon.move_hero(movement_direction)
-    select_screen_depending_on_result_from_movement(result_from_movement)
+    select_screen_depending_on_result_from_movement(dungeon, result_from_movement)
 
 
 def select_player_turn_depending_on_pressed_key_for_turn(dungeon, pressed_key_for_turn):

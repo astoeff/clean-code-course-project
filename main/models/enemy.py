@@ -8,7 +8,8 @@ from playable import Playable
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from constants import (ENEMY_MIN_MANA_AND_HEALTH_WHEN_INITIALISING, ENEMY_MAX_MANA_AND_HEALTH_WHEN_INITIALISING,
-                       ENEMY_MIN_DAMAGE_WHEN_INITIALISING, ENEMY_MAX_DAMAGE_WHEN_INITIALISING)
+                       ENEMY_MIN_DAMAGE_WHEN_INITIALISING, ENEMY_MAX_DAMAGE_WHEN_INITIALISING, ENEMY_REPR_FIRST_PART,
+                       ENEMY_REPR_HEALTH, ENEMY_REPR_MANA, ENEMY_REPR_DAMAGE)
 
 
 class Enemy(Playable):
@@ -18,11 +19,13 @@ class Enemy(Playable):
         self.mana = random.randint(ENEMY_MIN_MANA_AND_HEALTH_WHEN_INITIALISING,
                                    ENEMY_MAX_MANA_AND_HEALTH_WHEN_INITIALISING)
         self.damage = random.randint(ENEMY_MIN_DAMAGE_WHEN_INITIALISING, ENEMY_MAX_DAMAGE_WHEN_INITIALISING)
+        self.weapon = None
+        self.spell = None
 
     def attack(self):
         max_damage = max(self.damage, super().attack())
         return max_damage
 
     def __repr__(self):
-        return "Enemy(health={h},\
- mana={m}, damage={d})".format(h=self.health, m=self.mana, d=self.damage)
+        return ENEMY_REPR_FIRST_PART + ENEMY_REPR_HEALTH + self.health + ENEMY_REPR_MANA + self.mana +\
+            ENEMY_REPR_DAMAGE + self.damage

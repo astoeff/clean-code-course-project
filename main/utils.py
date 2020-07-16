@@ -4,10 +4,13 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 
-from constants import (CLEAR_BASH_COMMAND,C_KEY, MESSAGE_FOR_CONTINUE, TREASURES_FILE, FILE_READING_MODE,
+from constants import (CLEAR_BASH_COMMAND, C_KEY, MESSAGE_FOR_CONTINUE, TREASURES_FILE, FILE_READING_MODE,
                        TREASURE_ARGUMENTS_SEPARATOR_IN_TREASURES_FILE, SPELL_CLASS_IN_TREASURES_FILE_STRING,
                        WEAPON_CLASS_IN_TREASURES_FILE_STRING, HEALTH_POTION_CLASS_IN_TREASURES_FILE_STRING,
-                       MANA_POTION_IN_TREASURES_FILE_STRING)
+                       MANA_POTION_IN_TREASURES_FILE_STRING, DUNGEON_MAP_STARTING_POSITION_SYMBOL,
+                       DUNGEON_MAP_GATE_POSITION_SYMBOL, DUNGEON_GATES_NUMBER,
+                       VALIDATE_DUNGEON_NO_STARTING_POSITION_ERROR_TEXT,
+                       VALIDATE_DUNGEON_NUMBER_OF_GATES_NOT_ONE_ERROR_TEXT, DUNGEON_MAP_FIRST_ROW_AND_COLUMN_NUMBER)
 from read_input_help_library import get_character
 from treasures.spell import Spell
 from treasures.weapon import Weapon
@@ -54,17 +57,17 @@ def show_message_screen(message):
 
 
 def validate_dungeon_map(dungeon_map):
-    assert 'S' in dungeon_map, "No starting point"
+    assert DUNGEON_MAP_STARTING_POSITION_SYMBOL in dungeon_map, VALIDATE_DUNGEON_NO_STARTING_POSITION_ERROR_TEXT
 
-    gates = 0
+    gates_count = 0
     for symbol in dungeon_map:
-        if symbol == "G":
-            gates += 1
-    assert gates == 1, "Number of gates != 1"
+        if symbol == DUNGEON_MAP_GATE_POSITION_SYMBOL:
+            gates_count += 1
+    assert gates_count == DUNGEON_GATES_NUMBER, VALIDATE_DUNGEON_NUMBER_OF_GATES_NOT_ONE_ERROR_TEXT
 
 
 def check_is_row_or_column_inside_map(row, column):
-    return row >= 0 and column >= 0
+    return row >= DUNGEON_MAP_FIRST_ROW_AND_COLUMN_NUMBER and column >= DUNGEON_MAP_FIRST_ROW_AND_COLUMN_NUMBER
 
 
 def create_treasure_instance_by_list_of_args(treasure_args_list):
