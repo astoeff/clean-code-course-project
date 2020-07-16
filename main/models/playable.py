@@ -59,16 +59,18 @@ class Playable:
         return self.weapon is not None
 
     def can_cast_spell(self):
+        does_playable_have_mana_for_casting_spell = False
         does_playable_have_spell = self.spell is not None
-        does_playable_have_mana_for_casting_spell = self.spell.mana_cost <= self.mana_cost
+        if does_playable_have_spell:
+            does_playable_have_mana_for_casting_spell = self.spell.mana_cost <= self.mana_cost
         return does_playable_have_spell and does_playable_have_mana_for_casting_spell
 
     def attack(self):
-        weapon_damaage = 0
+        weapon_damage = 0
         spell_damage = 0
         if self.can_attack_with_weapon():
-            weapon_damaage = self.weapon.damage_points
+            weapon_damage = self.weapon.damage
         if self.can_cast_spell():
             spell_damage = self.spell.damage_points
-        max_damage = max(weapon_damaage, spell_damage)
+        max_damage = max(weapon_damage, spell_damage)
         return max_damage

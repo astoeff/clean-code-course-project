@@ -10,10 +10,11 @@ from main.constants import (INTRO_TEXT, CREATE_HERO_TEXT, HERO_HEALTH_WHEN_INITI
 from main.utils import (new_screen, wait_for_continue_command, wait_until_key_from_list_of_keys_is_pressed,
                         show_message_screen, generate_random_treasure_from_file)
 from main.models.hero import Hero
+from main.models.enemy import Enemy
 from main.treasures.weapon import Weapon
 from main.treasures.treasure import Treasure
 from main.dungeon import Dungeon
-import time
+from main.fight import Fight
 
 
 def print_intro():
@@ -74,7 +75,7 @@ def show_achieved_treasure(treasure):
     wait_for_continue_command()
 
 
-def select_screen_depending_on_result_from_movement(result_from_movement):
+def select_screen_depending_on_result_from_movement(dungeon, result_from_movement):
     is_treasure_achieved_after_movement = result_from_movement == ACHIEVED_TREASURE_RESULT_FROM_MOVEMENT
     is_gate_reached_after_movement = result_from_movement == REACHED_GATE_RESULT_FROM_MOVEMENT
     is_enemy_reached_after_movement = result_from_movement == REACHED_ENEMY_RESULT_FROM_MOVEMENT
@@ -85,7 +86,11 @@ def select_screen_depending_on_result_from_movement(result_from_movement):
     elif is_gate_reached_after_movement:
         raise SystemExit()
     elif is_enemy_reached_after_movement:
-        pass
+        fight = Fight(dungeon.hero, Enemy())
+        fight.execute()
+        new_screen()
+        print('\n'.join(fight.get_fight_information()))
+        wait_for_continue_command()
     elif is_checkpoint_reached_after_movement:
         pass
 
@@ -93,7 +98,7 @@ def select_screen_depending_on_result_from_movement(result_from_movement):
 def move_hero(dungeon, pressed_key_for_turn):
     movement_direction = MOVEMENT_DIRECTION_BY_SYMBOL_DICTIONARY[pressed_key_for_turn]
     result_from_movement = dungeon.move_hero(movement_direction)
-    select_screen_depending_on_result_from_movement(result_from_movement)
+    select_screen_depending_on_result_from_movement(dungeon, result_from_movement)
 
 
 def select_player_turn_depending_on_pressed_key_for_turn(dungeon, pressed_key_for_turn):

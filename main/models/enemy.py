@@ -18,6 +18,8 @@ class Enemy(Playable):
         self.mana = random.randint(ENEMY_MIN_MANA_AND_HEALTH_WHEN_INITIALISING,
                                    ENEMY_MAX_MANA_AND_HEALTH_WHEN_INITIALISING)
         self.damage = random.randint(ENEMY_MIN_DAMAGE_WHEN_INITIALISING, ENEMY_MAX_DAMAGE_WHEN_INITIALISING)
+        self.weapon = None
+        self.spell = None
 
     def attack(self):
         max_damage = max(self.damage, super().attack())
