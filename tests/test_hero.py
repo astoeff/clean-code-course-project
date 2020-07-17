@@ -20,7 +20,7 @@ class TestHero(unittest.TestCase):
         self.assertEqual(mana, h.mana)
         self.assertEqual(mana_regeneration_rate, h.mana_regeneration_rate)
 
-    #known_as()
+    #known_as
     def test_with_given_hero_should_return_correctly(self):
         name = 'Bron'
         title = 'Dragonslayer'
@@ -29,7 +29,7 @@ class TestHero(unittest.TestCase):
         mana_regeneration_rate = 2
         h = Hero(name, title, health, mana, mana_regeneration_rate)
 
-        result = h.known_as()
+        result = h.known_as
         expected = name + ' the ' + title
 
         self.assertEqual(expected, result)

@@ -27,5 +27,5 @@ class Enemy(Playable):
         return max_damage
 
     def __repr__(self):
-        return ENEMY_REPR_FIRST_PART + ENEMY_REPR_HEALTH + self.health + ENEMY_REPR_MANA + self.mana +\
-            ENEMY_REPR_DAMAGE + self.damage
+        return ENEMY_REPR_FIRST_PART + ENEMY_REPR_HEALTH + str(self.health) + ENEMY_REPR_MANA + str(self.mana) +\
+            ENEMY_REPR_DAMAGE + str(self.damage)
