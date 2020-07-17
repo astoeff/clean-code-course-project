@@ -16,22 +16,25 @@ class Fight:
     def oposite_direction(self):
         return DIRECTIONS_WITH_THEIR_OPPOSITES_DICTIONARY[self.direction]
 
+    def set_information_parts(self, part_to_append):
+        self.information_parts.append(part_to_append)
+
     def hero_attack(self):
         damage_from_attack = self.hero.attack()
-        can_hero_attack = damage_from_attack > PLAYER_ZERO_DAMAGE_WHEN_ATTACKING
-        if can_hero_attack:
-            self.information_parts.append(FIGHT_HERO_ATTACK_INFORMATION_PART + str(damage_from_attack))
-        else:
-            self.information_parts.append(FIGHT_HERO_CANNOT_ATTACK_INFORMATION_PART)
+        information_part_to_append = FIGHT_HERO_ATTACK_INFORMATION_PART + str(damage_from_attack)
+        hero_can_not_attack = damage_from_attack == PLAYER_ZERO_DAMAGE_WHEN_ATTACKING
+        if hero_can_not_attack:
+            information_part_to_append = FIGHT_HERO_CANNOT_ATTACK_INFORMATION_PART
+        self.set_information_parts(information_part_to_append)
         self.enemy.take_damage(damage_from_attack)
 
     def enemy_attack(self):
         damage_from_attack = self.enemy.attack()
-        can_enemy_attack = damage_from_attack > PLAYER_ZERO_DAMAGE_WHEN_ATTACKING
-        if can_enemy_attack:
-            self.information_parts.append(FIGHT_ENEMY_ATTACK_INFORMATION_PART + str(damage_from_attack))
-        else:
-            self.information_parts.append(FIGHT_ENEMY_CANNOT_ATTACK_INFORMATION_PART)
+        information_part_to_append = FIGHT_ENEMY_ATTACK_INFORMATION_PART + str(damage_from_attack)
+        enemy_can_not_attack = damage_from_attack == PLAYER_ZERO_DAMAGE_WHEN_ATTACKING
+        if enemy_can_not_attack:
+            information_part_to_append = FIGHT_ENEMY_CANNOT_ATTACK_INFORMATION_PART
+        self.set_information_parts(information_part_to_append)
         self.hero.take_damage(damage_from_attack)
 
     def execute(self):

@@ -24,11 +24,7 @@ def new_screen():
 
 
 def check_if_correct_key_is_pressed(symbols, pressed):
-    is_correct_key_pressed = False
-    for symbol in symbols:
-        if pressed == symbol:
-            is_correct_key_pressed = True
-            break
+    is_correct_key_pressed = pressed in symbols
     return is_correct_key_pressed
 
 
@@ -66,8 +62,10 @@ def validate_dungeon_map(dungeon_map):
     assert gates_count == DUNGEON_GATES_NUMBER, VALIDATE_DUNGEON_NUMBER_OF_GATES_NOT_ONE_ERROR_TEXT
 
 
-def check_is_row_or_column_inside_map(row, column):
-    return row >= DUNGEON_MAP_FIRST_ROW_AND_COLUMN_NUMBER and column >= DUNGEON_MAP_FIRST_ROW_AND_COLUMN_NUMBER
+def check_is_row_and_column_inside_map(row, column):
+    is_row_inside_map = row >= DUNGEON_MAP_FIRST_ROW_AND_COLUMN_NUMBER
+    is_column_inside_map = column >= DUNGEON_MAP_FIRST_ROW_AND_COLUMN_NUMBER
+    return is_row_inside_map and is_column_inside_map
 
 
 def create_treasure_instance_by_list_of_args(treasure_args_list):
